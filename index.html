@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="codebase/skins/touch.css" type="text/css" media="screen" charset="utf-8">
+	<script src="codebase/webix.js" type="text/javascript" charset="utf-8"></script>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Demo</title>
+
+</head>
+<body>
+	<script>
+	webix.ready(function(){
+		webix.ui.fullScreen();
+		webix.ui({
+			rows:[
+				
+				{
+					view: "multiview",
+					cells: [
+						{
+							id: "films",
+							view: "unitlist",
+							scheme : {
+								$sort: {
+									by: "title",
+									dir: 'asc',
+									as: "string"
+								}
+							},
+							uniteBy: function(obj){
+								return obj.title.substr(0,1);
+							},
+							template: "#title#",
+							url: "post->http://dev.galih.my.or.id/movieapi/index.php/films/all.json"
+						},
+						{
+							id: "actors",
+							view: "unitlist"
+						},
+						{
+							id: "genres",
+							view: "unitlist"
+						}
+					]
+				},
+				
+				{
+					view: "tabbar",
+					type: "iconTop",
+					multiview: true,
+					options: [
+						{id: "films", icon: "film", value: "Film"},
+						{id: "actors", icon: "user", value: "Actors"},
+						{id: "genres", icon: "tags", value: "Genres"}
+					]
+				}
+			]
+		});
+	});
+	</script>
+</body>
+</html>
